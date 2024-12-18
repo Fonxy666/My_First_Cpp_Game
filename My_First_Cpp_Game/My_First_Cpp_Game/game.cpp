@@ -5,7 +5,7 @@
 float player_1_p, player_1_dp, player_2_p, player_2_dp = 0.f;
 float arena_half_size_x = 85, arena_half_size_y = 45;
 float player_half_size_x = 2.5, player_half_size_y = 12;
-float ball_p_x, ball_p_y, ball_dp_x = 100, ball_dp_y, ball_half_size = 1;
+float ball_p_x, ball_p_y, ball_dp_x = 130, ball_dp_y, ball_half_size = 1;
 
 int player_1_score, player_2_score;
 
@@ -41,8 +41,14 @@ simulate_game(Input* input, float dt) {
     draw_rect(0, 0, 85, 45, 0xffaa32);
 
     float player_1_ddp = 0.f;
+#if 0
     if (is_down(BUTTON_UP)) player_1_ddp += 2000;
     if (is_down(BUTTON_DOWN)) player_1_ddp -= 2000;
+#else
+    player_1_ddp = (ball_p_y - player_1_p) * 100;
+    if (player_1_ddp > 1300) player_1_ddp = 1300;
+    if (player_1_ddp < -1300) player_1_ddp = -1300;
+#endif
 
     float player_2_ddp = 0.f;
     if (is_down(BUTTON_W)) player_2_ddp += 2000;
