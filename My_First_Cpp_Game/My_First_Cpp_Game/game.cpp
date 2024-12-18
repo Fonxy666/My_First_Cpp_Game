@@ -7,6 +7,8 @@ float arena_half_size_x = 85, arena_half_size_y = 45;
 float player_half_size_x = 2.5, player_half_size_y = 12;
 float ball_p_x, ball_p_y, ball_dp_x = 100, ball_dp_y, ball_half_size = 1;
 
+int player_1_score, player_2_score;
+
 internal void
 simulate_player(float *p, float *dp, float ddp, float dt) {
     ddp -= *dp * 10.f;
@@ -25,11 +27,12 @@ simulate_player(float *p, float *dp, float ddp, float dt) {
 }
 
 internal bool
-aabb_vs_aabb(float p1x, float p1y, float hs1x, float hs1y, float p2x, float p2y, float hs2x, float hs2y) {
+aabb_vs_aabb(float p1x, float p1y, float hs1x, float hs1y,
+    float p2x, float p2y, float hs2x, float hs2y) {
     return (p1x + hs1x > p2x - hs2x &&
-        p1x + hs1x < p2x + hs2y &&
+        p1x - hs1x < p2x + hs2x &&
         p1y + hs1y > p2y - hs2y &&
-        p1y + hs1y < p2x + hs2y);
+        p1y + hs1y < p2y + hs2y);
 }
 
 internal void
@@ -50,7 +53,6 @@ simulate_game(Input* input, float dt) {
 
     //Simulate Ball
     {
-
         ball_p_x += ball_dp_x * dt;
         ball_p_y += ball_dp_y * dt;
 
@@ -68,7 +70,8 @@ simulate_game(Input* input, float dt) {
         if (ball_p_y + ball_half_size > arena_half_size_y) {
             ball_p_y = arena_half_size_y - ball_half_size;
             ball_dp_y *= -1;
-        } else if (ball_p_y - ball_half_size < -arena_half_size_y) {
+        }
+        else if (ball_p_y - ball_half_size < -arena_half_size_y) {
             ball_p_y = -arena_half_size_y + ball_half_size;
             ball_dp_y *= -1;
         }
@@ -78,13 +81,19 @@ simulate_game(Input* input, float dt) {
             ball_dp_y = 0;
             ball_p_x = 0;
             ball_p_y = 0;
-        } else if (ball_p_x - ball_half_size < -arena_half_size_x) {
+            player_1_score++;
+        }
+        else if (ball_p_x - ball_half_size < -arena_half_size_x) {
             ball_dp_x *= -1;
             ball_dp_y = 0;
             ball_p_x = 0;
             ball_p_y = 0;
+            player_2_score++;
         }
     }
+
+    draw_number(player_1_score, -10, 40, 1.f, 0xbbffbb);
+    draw_number(player_2_score, 10, 40, 1.f, 0xbbffbb);
 
     //Rendering
     draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff);
