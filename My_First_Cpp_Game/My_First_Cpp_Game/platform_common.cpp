@@ -12,6 +12,6 @@ enum {
 	BUTTON_COUNT
 };
 
-struct input {
-	Button_State buttons[];
+struct Input {
+	Button_State buttons[BUTTON_COUNT];
 };
