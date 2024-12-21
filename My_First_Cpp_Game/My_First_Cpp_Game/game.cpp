@@ -41,7 +41,7 @@ enum GameMode {
 };
 
 GameMode current_gamemode;
-int hot_button;
+int hot_button = 0;
 bool enemy_is_ai;
 
 internal void
@@ -119,23 +119,47 @@ simulate_game(Input* input, float dt) {
         draw_rect(-80, player_2_p, player_half_size_x, player_half_size_y, 0xff0000);
     }
     else {
-        if (pressed(BUTTON_UP) || pressed(BUTTON_DOWN)) {
-            hot_button = ~hot_button;
+        if (pressed(BUTTON_UP)) {
+            hot_button--;
+            if (hot_button < 0) {
+                hot_button = 2;
+            }
+        }
+        else if (pressed(BUTTON_DOWN)) {
+            hot_button++;
+            if (hot_button > 2) {
+                hot_button = 0;
+            }
         }
 
         if (pressed(BUTTON_ENTER)) {
-            current_gamemode = GM_GAMEPLAY;
-            enemy_is_ai = hot_button ? 0 : 1;
+            if (hot_button == 0) {
+                current_gamemode = GM_GAMEPLAY;
+                enemy_is_ai = true;
+            }
+            else if (hot_button == 1) {
+                current_gamemode = GM_GAMEPLAY;
+                enemy_is_ai = false;
+            }
+            else if (hot_button == 2) {
+                running = false;
+            }
         }
+
         if (hot_button == 0) {
             draw_text("SINGLE PLAYER", -80, 0, 1, 0xff0000);
             draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xaaaaaa);
             draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
         }
-        else {
+        else if (hot_button == 1) {
             draw_text("SINGLE PLAYER", -80, 0, 1, 0xaaaaaa);
             draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xff0000);
             draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
+        }
+        else if (hot_button == 2) {
+            draw_text("SINGLE PLAYER", -80, 0, 1, 0xaaaaaa);
+            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xaaaaaa);
+            draw_text("EXIT", -80, -30, 1, 0xff0000);
         }
 
         draw_text("PONG TUTORIAL", -73, 40, 2, 0xffffff);
