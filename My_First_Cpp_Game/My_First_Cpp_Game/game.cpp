@@ -37,6 +37,7 @@ aabb_vs_aabb(float p1x, float p1y, float hs1x, float hs1y,
 
 enum GameMode {
     GM_MENU,
+    GM_CONTROLS,
     GM_GAMEPLAY
 };
 
@@ -50,6 +51,10 @@ simulate_game(Input* input, float dt) {
     draw_arena_borders(arena_half_size_x, arena_half_size_y, 0xff5500);
 
     if (current_gamemode == GM_GAMEPLAY) {
+        if (pressed(BUTTON_ESC)) {
+            current_gamemode = GM_MENU;
+        }
+
         float player_1_ddp = 0.f;
         if (!enemy_is_ai) {
             if (is_down(BUTTON_UP)) player_1_ddp += 2000;
@@ -117,17 +122,28 @@ simulate_game(Input* input, float dt) {
 
         draw_rect(80, player_1_p, player_half_size_x, player_half_size_y, 0xff0000);
         draw_rect(-80, player_2_p, player_half_size_x, player_half_size_y, 0xff0000);
+        draw_text("ESC TO GO BACK", 46, 48.5, .50, 0xffffff);
+    }
+    else if (current_gamemode == GM_CONTROLS) {
+        draw_text("PLAYER I MOVE UP WITH W", -80, 40, .75, 0xff0000);
+        draw_text("PLAYER I MOVE DOWN WITH S", -80, 30, .75, 0xff0000);
+        draw_text("PLAYER II MOVE UP WITH UP ARROW", -80, 20, .75, 0xff0000);
+        draw_text("PLAYER II MOVE DOWN WITH DOWN ARROW", -80, 10, .75, 0xff0000);
+        draw_text("PRESS ESCAPE TO GO BACK", -80, 0, .75, 0xff0000);
+        if (pressed(BUTTON_ESC)) {
+            current_gamemode = GM_MENU;
+        }
     }
     else {
         if (pressed(BUTTON_UP)) {
             hot_button--;
             if (hot_button < 0) {
-                hot_button = 2;
+                hot_button = 3;
             }
         }
         else if (pressed(BUTTON_DOWN)) {
             hot_button++;
-            if (hot_button > 2) {
+            if (hot_button > 3) {
                 hot_button = 0;
             }
         }
@@ -142,27 +158,39 @@ simulate_game(Input* input, float dt) {
                 enemy_is_ai = false;
             }
             else if (hot_button == 2) {
+                current_gamemode = GM_CONTROLS;
+            }
+            else if (hot_button == 3) {
                 running = false;
             }
         }
 
         if (hot_button == 0) {
-            draw_text("SINGLE PLAYER", -80, 0, 1, 0xff0000);
-            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xaaaaaa);
-            draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
+            draw_text("SINGLE PLAYER", -80, 0, .75, 0xff0000);
+            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
+            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
+            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
         }
         else if (hot_button == 1) {
-            draw_text("SINGLE PLAYER", -80, 0, 1, 0xaaaaaa);
-            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xff0000);
-            draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
+            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
+            draw_text("MULTIPLAYER", -80, -10, .75, 0xff0000);
+            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
+            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
         }
         else if (hot_button == 2) {
-            draw_text("SINGLE PLAYER", -80, 0, 1, 0xaaaaaa);
-            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xaaaaaa);
-            draw_text("EXIT", -80, -30, 1, 0xff0000);
+            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
+            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
+            draw_text("CONTROLS", -80, -20, .75, 0xff0000);
+            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
+        }
+        else if (hot_button == 3) {
+            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
+            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
+            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
+            draw_text("EXIT", -80, -30, .75, 0xff0000);
         }
 
-        draw_text("PONG TUTORIAL", -73, 40, 2, 0xffffff);
+        draw_text("PONG GAME", -73, 40, 2, 0xffffff);
         draw_text("DEVELOPED BY FONXY", -73, 22, .75, 0xffffff);
     }
 }
