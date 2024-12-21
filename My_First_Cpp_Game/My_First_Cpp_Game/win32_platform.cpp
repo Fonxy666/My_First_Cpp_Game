@@ -56,17 +56,23 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     WNDCLASS window_class = {};
     window_class.style = CS_HREDRAW | CS_VREDRAW;
     window_class.lpfnWndProc = window_callback;
-    window_class.lpszClassName = L"BasicWndClass";
+    window_class.lpszClassName = L"Fonxy's Pong Game";
+    ShowCursor(FALSE);
 
     RegisterClass(&window_class);
 
     HWND window = CreateWindow(
         window_class.lpszClassName,
-        L"My First Game!",
+        L"Pong Game - By Fonxy!",
         WS_OVERLAPPEDWINDOW | WS_VISIBLE,
         CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720,
         0, 0, hInstance, 0
-    );
+    ); {
+        SetWindowLong(window, GWL_STYLE, GetWindowLong(window, GWL_STYLE) & ~WS_OVERLAPPEDWINDOW);
+        MONITORINFO mi = { sizeof(mi) };
+        GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi);
+        SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+    };
     HDC hdc = GetDC(window);
 
     Input input = {};

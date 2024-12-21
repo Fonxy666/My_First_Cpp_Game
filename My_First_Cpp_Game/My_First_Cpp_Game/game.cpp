@@ -46,8 +46,8 @@ bool enemy_is_ai;
 
 internal void
 simulate_game(Input* input, float dt) {
-    clear_screen(0xff5500);
     draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0xffaa32);
+    draw_arena_borders(arena_half_size_x, arena_half_size_y, 0xff5500);
 
     if (current_gamemode == GM_GAMEPLAY) {
         float player_1_ddp = 0.f;
@@ -119,23 +119,26 @@ simulate_game(Input* input, float dt) {
         draw_rect(-80, player_2_p, player_half_size_x, player_half_size_y, 0xff0000);
     }
     else {
-        if (pressed(BUTTON_LEFT) || pressed(BUTTON_RIGHT)) {
-            hot_button = !hot_button;
+        if (pressed(BUTTON_UP) || pressed(BUTTON_DOWN)) {
+            hot_button = ~hot_button;
         }
-
 
         if (pressed(BUTTON_ENTER)) {
             current_gamemode = GM_GAMEPLAY;
             enemy_is_ai = hot_button ? 0 : 1;
         }
         if (hot_button == 0) {
-            draw_rect(-20, 0, 10, 10, 0xff0000);
-            draw_rect(20, 0, 10, 10, 0xcccccc);
+            draw_text("SINGLE PLAYER", -80, 0, 1, 0xff0000);
+            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xaaaaaa);
+            draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
         }
         else {
-            draw_rect(-20, 0, 10, 10, 0xcccccc);
-            draw_rect(20, 0, 10, 10, 0xff0000);
+            draw_text("SINGLE PLAYER", -80, 0, 1, 0xaaaaaa);
+            draw_text("MULTIPLAYERPLAYER", -80, -15, 1, 0xff0000);
+            draw_text("EXIT", -80, -30, 1, 0xaaaaaa);
         }
-        draw_text("TUTORIAL", 0, 0, 1, 0xff00ff);
+
+        draw_text("PONG TUTORIAL", -73, 40, 2, 0xffffff);
+        draw_text("DEVELOPED BY FONXY", -73, 22, .75, 0xffffff);
     }
 }
