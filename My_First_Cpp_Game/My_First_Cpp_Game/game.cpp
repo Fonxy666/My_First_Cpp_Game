@@ -125,11 +125,11 @@ simulate_game(Input* input, float dt) {
         draw_text("ESC TO GO BACK", 46, 48.5, .50, 0xffffff);
     }
     else if (current_gamemode == GM_CONTROLS) {
-        draw_text("PLAYER I MOVE UP WITH W", -80, 40, .75, 0xff0000);
-        draw_text("PLAYER I MOVE DOWN WITH S", -80, 30, .75, 0xff0000);
-        draw_text("PLAYER II MOVE UP WITH UP ARROW", -80, 20, .75, 0xff0000);
-        draw_text("PLAYER II MOVE DOWN WITH DOWN ARROW", -80, 10, .75, 0xff0000);
-        draw_text("PRESS ESCAPE TO GO BACK", -80, 0, .75, 0xff0000);
+        draw_text("Player I up key : 'w'", -80, 40, .75, 0xff0000);
+        draw_text("Player I down key : 's'", -80, 30, .75, 0xff0000);
+        draw_text("Player II up key : up arrow", -80, 20, .75, 0xff0000);
+        draw_text("Player II down key : down arrow", -80, 10, .75, 0xff0000);
+        draw_text("Press ESC to go back", -80, 0, .75, 0xff0000);
         if (pressed(BUTTON_ESC)) {
             current_gamemode = GM_MENU;
         }
@@ -166,31 +166,31 @@ simulate_game(Input* input, float dt) {
         }
 
         if (hot_button == 0) {
-            draw_text("SINGLE PLAYER", -80, 0, .75, 0xff0000);
-            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
-            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
-            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
+            draw_text("Single player", -80, 0, .75, 0xff0000);
+            draw_text("Multiplayer", -80, -10, .75, 0xaaaaaa);
+            draw_text("Controls", -80, -20, .75, 0xaaaaaa);
+            draw_text("Exit", -80, -30, .75, 0xaaaaaa);
         }
         else if (hot_button == 1) {
-            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
-            draw_text("MULTIPLAYER", -80, -10, .75, 0xff0000);
-            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
-            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
+            draw_text("Single player", -80, 0, .75, 0xaaaaaa);
+            draw_text("Multiplayer", -80, -10, .75, 0xff0000);
+            draw_text("Controls", -80, -20, .75, 0xaaaaaa);
+            draw_text("Exit", -80, -30, .75, 0xaaaaaa);
         }
         else if (hot_button == 2) {
-            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
-            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
-            draw_text("CONTROLS", -80, -20, .75, 0xff0000);
-            draw_text("EXIT", -80, -30, .75, 0xaaaaaa);
+            draw_text("Single player", -80, 0, .75, 0xaaaaaa);
+            draw_text("Multiplayer", -80, -10, .75, 0xaaaaaa);
+            draw_text("Controls", -80, -20, .75, 0xff0000);
+            draw_text("Exit", -80, -30, .75, 0xaaaaaa);
         }
         else if (hot_button == 3) {
-            draw_text("SINGLE PLAYER", -80, 0, .75, 0xaaaaaa);
-            draw_text("MULTIPLAYER", -80, -10, .75, 0xaaaaaa);
-            draw_text("CONTROLS", -80, -20, .75, 0xaaaaaa);
-            draw_text("EXIT", -80, -30, .75, 0xff0000);
+            draw_text("Single player", -80, 0, .75, 0xaaaaaa);
+            draw_text("Multiplayer", -80, -10, .75, 0xaaaaaa);
+            draw_text("Controls", -80, -20, .75, 0xaaaaaa);
+            draw_text("Exit", -80, -30, .75, 0xff0000);
         }
 
-        draw_text("PONG GAME", -73, 40, 2, 0xffffff);
-        draw_text("DEVELOPED BY FONXY", -73, 22, .75, 0xffffff);
+        draw_text("Pong Game", -73, 40, 2, 0xffffff);
+        draw_text("Developed by FONXY", -73, 22, .75, 0xffffff);
     }
 }
