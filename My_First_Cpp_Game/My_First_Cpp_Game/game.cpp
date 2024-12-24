@@ -35,6 +35,13 @@ aabb_vs_aabb(float p1x, float p1y, float hs1x, float hs1y,
         p1y + hs1y < p2y + hs2y);
 }
 
+struct Controls {
+    int player_1_up;
+    int player_1_down;
+    int player_2_up;
+    int player_2_down;
+};
+
 enum GameMode {
     GM_MENU,
     GM_CONTROLS,
@@ -125,10 +132,10 @@ simulate_game(Input* input, float dt) {
         draw_text("ESC TO GO BACK", 46, 48.5, .50, 0xffffff);
     }
     else if (current_gamemode == GM_CONTROLS) {
-        draw_text("Player I up key : 'w'", -80, 40, .75, 0xff0000);
-        draw_text("Player I down key : 's'", -80, 30, .75, 0xff0000);
-        draw_text("Player II up key : up arrow", -80, 20, .75, 0xff0000);
-        draw_text("Player II down key : down arrow", -80, 10, .75, 0xff0000);
+        draw_text("Player 1 up key : 'w'", -80, 40, .75, 0xff0000);
+        draw_text("Player 1 down key : 's'", -80, 30, .75, 0xff0000);
+        draw_text("Player 2 up key : up arrow", -80, 20, .75, 0xff0000);
+        draw_text("Player 2 down key : down arrow", -80, 10, .75, 0xff0000);
         draw_text("Press ESC to go back", -80, 0, .75, 0xff0000);
         if (pressed(BUTTON_ESC)) {
             current_gamemode = GM_MENU;
